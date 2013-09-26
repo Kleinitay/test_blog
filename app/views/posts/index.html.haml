@@ -1,0 +1,16 @@
+%h1 Listing Posts
+%table
+  %tr
+    %th Title
+    %th Text
+    %th
+    %th
+    %th
+  - @posts.each do |post|
+    %tr
+      %td= post.title
+      %td= post.text
+      %td= link_to 'Show', post_path
+      %td= link_to 'Edit', edit_post_path(post)
+      %td= link_to 'Destroy', post_path(post),                 |
+          method: :delete, data: { confirm: 'Are you sure?' } |

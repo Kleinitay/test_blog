@@ -1,0 +1,20 @@
+%p
+  %strong Title:
+  = @post.title
+%p
+  %strong Text:
+  = @post.text
+%h2 Add a comment:
+= form_for([@post, @post.comments.build]) do |f|
+  %p
+    = f.label :commenter
+    %br/
+    = f.text_field :commenter
+  %p
+    = f.label :body
+    %br/
+    = f.text_area :body
+  %p
+    = f.submit
+= link_to 'Edit Post', edit_post_path(@post)
+= link_to 'Back to Posts', posts_path
