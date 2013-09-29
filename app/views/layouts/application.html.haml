@@ -1,5 +1,5 @@
 !!!
-%html
+%html{"ng-app" => ""}
   %head
     %title Blog
     = stylesheet_link_tag    "application", :media => "all"
@@ -8,4 +8,15 @@
   %body
     %p.notice= notice
     %p.alert= alert
+    %header.navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          = link_to "Blogy", root_path, id: "logo"
+          %nav
+            %ul.nav.pull-right
+              - if user_signed_in?
+                = link_to "Sign out", destroy_user_session_path, :method => "delete"
+              - else
+                %li= link_to "Sign in", new_user_session_path
     = yield
+    %footer.footer

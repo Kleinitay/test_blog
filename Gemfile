@@ -9,6 +9,9 @@ gem 'sqlite3'
 gem 'devise'
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'angularjs-rails'
+gem 'angular-gem'
+
 
 
 # Gems used only for assets and not required
@@ -24,6 +27,10 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :test do
+	gem 'rspec'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
