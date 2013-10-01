@@ -1,14 +1,17 @@
 class CommentsController < ApplicationController
 	def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.create(params[:comment])
-    redirect_to post_path(@post)
+    if @post.comments.create(params[:comment])
+      render :json => { success: true }
+    else 
+      render :json => {success: false}, status: 422
+    end 
   end
 
   def destroy
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
     @comment.destroy
-    redirect_to post_path(@post)
+    render :json => { success: true }
   end
 end

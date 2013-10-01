@@ -1,6 +1,16 @@
 class PostsController < ApplicationController
 	def index
   		@posts = Post.all
+  		#render :json => @posts
+	end
+
+	def main
+	end
+
+	def filter
+		filter_labels = params[:labels].split(',')
+		@posts = Post.joins(:labels).where(:name => filter_labels)
+		render :json => @posts
 	end
 
 	def new
@@ -9,6 +19,7 @@ class PostsController < ApplicationController
 
 	def edit
 	  @post = Post.find(params[:id])
+	  render :json => @post
 	end
 
 	def update
@@ -33,6 +44,7 @@ class PostsController < ApplicationController
 
 	def show
   		@post = Post.find(params[:id])
+  		render :json => @post
 	end
 
 	def destroy
