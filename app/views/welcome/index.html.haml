@@ -1,10 +1,13 @@
-.container.center
-  %h1 Hello, Rails!
-  - if current_user.nil?
-    = link_to "Login", new_user_session_path, class: "btn btn-large btn-primary"  
-    or
-    = link_to "register", new_user_registration_path, class: "btn btn-large btn-primary"
+%h1 Hello, Rails!
 
-  - else
-    = link_to "My Blog", controller: "posts"
-    = link_to 'New post', new_post_path 
+- if current_user.nil?
+
+	= link_to "Login", new_user_session_path
+	or
+	= link_to "register", new_user_registration_path
+
+- else
+
+	= link_to "My Blog", controller: "posts"
+
+	= link_to 'New post', new_post_path 
