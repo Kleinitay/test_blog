@@ -1,7 +1,6 @@
 Blog::Application.routes.draw do
   devise_for :users
 
-  get '/posts' => "posts#main"
 
   resources :posts do
     resources :comments

@@ -1,13 +1,35 @@
+#unclickableDiv
+#ajaxloader
+
 %p
   %strong Title:
   = @post.title
 %p
   %strong Text:
-  = @post.text
+  %p
+    = @post.text
+#postid.hidden
+  = @post.id
 %h2 Comments
-= render @post.comments
-%h2 Add a comment:
-= render "comments/form"
+//= render @post.comments
+%div{"ng-controller" => "CommentsController"}
+  %div{"ng-repeat" => "comment in comments"}
+    %p
+      %strong Commenter:
+      {{comment.commenter}}
+    %p
+      %strong Comment:
+      %blockquote
+        {{comment.body}}
+  %h2 Add a comment:
+  %form{"ng-submit" => "addComment()"}
+    %p
+      %input{"type" => "text", "ng-model" => "newComment.commenter", value: current_user.present? ? current_user.email : ""}
+    %p
+      %input{"type" => "text", "ng-model" => "newComment.text"}
+    %button.btn-primary{"type" => "submit"} Send
+
 = link_to 'Edit Post', edit_post_path(@post)
 |
 \#{link_to 'Back to Posts', posts_path}
+

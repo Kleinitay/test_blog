@@ -1,17 +1,23 @@
 %h1 Listing Posts
-%table{"ng-controller" => "PostsController"}
+= form_tag posts_path, method: "get" do
+  = text_field_tag :filter
+  = submit_tag "Filter", class: "btn btn-large btn-primary"
+%table
   %tr
     %th Title
     %th Text
-    %th {{test}}
     %th
     %th
-    %tr{"ng-repeat" => "post in posts"}
-      %td {{post.title}}
-      %td {{post.text}}
-      %td 
-        %a{"href" =>"/posts/{{post.id}}"}show
-      %td 
-        %a{"href" =>"/posts/{{post.id}}/edit"}edit
-      %td 
-        %a{"href" =>"/posts/{{post.id}}"}delete
+    %th
+      - @posts.each do |post|
+        %tr
+          %td
+            = post.title
+          %td
+            = post.text
+          %td
+            = link_to "show", post_path(post.id)
+          %td
+            = link_to "edit", edit_post_path(post.id)
+          %td
+            = link_to "delete", post_path(post.id), method: 'delete'
