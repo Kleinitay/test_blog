@@ -6,8 +6,10 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %p.notice= notice
-    %p.alert= alert
+    - if flash[:notice]
+      %p.notice= notice
+    - if flash[:alert]
+      %p.alert= alert
     %header.navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
         .container
@@ -15,7 +17,6 @@
           %nav
             %ul.nav.pull-right
               - if user_signed_in?
-                %li= "Hello #{current_user.email}"
                 %li= link_to "Sign out", destroy_user_session_path, :method => "delete"
               - else
                 %li= link_to "Sign in", new_user_session_path

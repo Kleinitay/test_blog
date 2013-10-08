@@ -8,28 +8,24 @@ commentsApp.factory('CommentsFactory', function ($http) {
         getComments:function (postid, callback) {
             $http({method:'GET', url:'/posts/' + postid + '/comments'}).
                 success(callback).
-                error(function (data, status, headers, config) {
-                });
+                error(callback);
         },
         addComment:function (postid, params, callback) {
-            $http({method:'post', url:'/posts/' + postid + '/comments', data:  params }).
+            $http({method:'post', url:'/posts/' + postid + '/comments', data:params }).
                 success(callback).
-                error(function (data, status, headers, config) {
-                    callback();
-                });
-
+                error(callback);
         }
     }
 });
 
-commentsApp.controller('CommentsController', function($scope, CommentsFactory) {
+commentsApp.controller('CommentsController', function ($scope, CommentsFactory) {
     $scope.newComment = {commenter:"", text:""};
     $scope.comments = [
         {commenter:"itay", body:"greate post"},
         {commenter:"koby", body:"lousy post"}
     ];
     var postid = $("#postid").text().trim();
-    CommentsFactory.getComments(postid, function(data){
+    CommentsFactory.getComments(postid, function (data) {
         $scope.comments = data;
     });
 
@@ -37,8 +33,20 @@ commentsApp.controller('CommentsController', function($scope, CommentsFactory) {
         $("#ajaxloader").fadeIn();
         $("#undisplaybleDiv").fadeIn();
         var postid = $("#postid").text().trim();
-        CommentsFactory.addComment(postid, {commenter: $scope.newComment.commenter,
-            comment: $scope.newComment.text}, function(){
+        CommentsFactory.addComment(postid, {commenter:$scope.newComment.commenter,
+            comment:$scope.newComment.text}, function (data, status) {
+            if (data.success !== true) {
+
+                dhtmlx.alert("Test alert", function (result) {
+                    dhtmlx.alert({
+                        title:"Error",
+                        type:"alert-error",
+                        ok:"Custom text",
+                        text:"Couldn't save comment"
+                    });
+                });
+
+            }
             $("#ajaxloader").fadeOut();
             $("#undisplaybleDiv").fadeOut();
             $scope.comments.push({commenter:$scope.newComment.commenter, body:$scope.newComment.text});
